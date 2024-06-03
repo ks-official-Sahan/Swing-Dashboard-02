@@ -189,6 +189,7 @@ public class MainForm extends JLayeredPane {
                 
                 headerBar.setBounds(bodyx, bodyy, bodyWidth, 60);
                 panelBody.setBounds(bodyx, bodyy+60, bodyWidth, bodyHeight-60);
+                //panelBody.setBounds(bodyx, bodyy, bodyWidth, bodyHeight);
             }
         }
     }
