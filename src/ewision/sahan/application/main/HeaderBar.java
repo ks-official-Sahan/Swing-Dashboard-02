@@ -1,12 +1,14 @@
 package ewision.sahan.application.main;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import ewision.sahan.application.Application;
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
+import raven.toast.Notifications;
 
 /**
  *
@@ -26,7 +28,7 @@ public class HeaderBar extends JPanel {
 
     public HeaderBar() {
         setBorder(new EmptyBorder(2, 15, 2, 15));
-        
+
         setLayout(new MigLayout("insets 0, fillx, aligny center",
                 "[fill]10[center]10[fill]",
                 "[]"));
@@ -52,10 +54,15 @@ public class HeaderBar extends JPanel {
         add(sessionLabel, "center");
 
         // User profile icon on the right
-        JLabel userProfileIcon = new JLabel();
+        JButton userProfileIcon = new JButton();
         userProfileIcon.setIcon(icon);
         userProfileIcon.setHorizontalAlignment(SwingConstants.TRAILING);
-        //userProfileIcon.setSize(100, 50);
+        userProfileIcon.addActionListener(((e) -> {
+            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_RIGHT, "Hello sample message");
+        }));
+        userProfileIcon.setBorder(new EmptyBorder(0, 0, 0, 0));
+        userProfileIcon.setContentAreaFilled(false);
+        userProfileIcon.setMaximumSize(new Dimension(80, 50));
         add(userProfileIcon, "right");
 
         // Initialize the session timer
@@ -73,6 +80,7 @@ public class HeaderBar extends JPanel {
                 } else {
                     timer.stop();
                     // Handle session timeout here if needed
+                    Application.logout();
                 }
             }
         });
@@ -85,14 +93,14 @@ public class HeaderBar extends JPanel {
         sessionLabel.setText(String.format("Session Time: %02d:%02d", minutes, seconds));
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Application Header Bar Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-
-        HeaderBar headerBar = new HeaderBar();
-        frame.add(headerBar, BorderLayout.NORTH);
-
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("Application Header Bar Example");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(800, 600);
+//
+//        HeaderBar headerBar = new HeaderBar();
+//        frame.add(headerBar, BorderLayout.NORTH);
+//
+//        frame.setVisible(true);
+//    }
 }
